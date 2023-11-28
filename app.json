@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.albanmary.snack76a824f9c6224d8b8bd13ba1e2da9ab6"
     },
     "web": {
       "favicon": "./assets/favicon.png"

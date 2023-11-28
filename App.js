@@ -30,6 +30,7 @@ const AllCardsScreen = ({ cards, flipCard, toggleFavorite }) => (
               borderRadius: 10,
               flexDirection: 'row',
               paddingHorizontal: 10,
+              marginBottom: 10,
             }}
           >
             <Text style={{ color: 'white', fontSize: 20 }}>{card.word}</Text>
@@ -46,6 +47,7 @@ const AllCardsScreen = ({ cards, flipCard, toggleFavorite }) => (
               borderRadius: 10,
               flexDirection: 'row',
               paddingHorizontal: 10,
+              marginBottom: 10,
             }}
           >
             <Text style={{ color: 'white', fontSize: 16 }}>{card.definition}</Text>
@@ -60,7 +62,6 @@ const AllCardsScreen = ({ cards, flipCard, toggleFavorite }) => (
             </TouchableOpacity>
           </View>
         </FlipCard>
-        <br />
       </TouchableOpacity>
     ))}
   </ScrollView>
@@ -88,6 +89,7 @@ const FavoriteCardsScreen = ({ favoriteCards, flipCard, toggleFavorite }) => (
               borderRadius: 10,
               flexDirection: 'row',
               paddingHorizontal: 10,
+              marginBottom: 10,
             }}
           >
             <Text style={{ color: 'white', fontSize: 20 }}>{card.word}</Text>
@@ -104,6 +106,7 @@ const FavoriteCardsScreen = ({ favoriteCards, flipCard, toggleFavorite }) => (
               borderRadius: 10,
               flexDirection: 'row',
               paddingHorizontal: 10,
+              marginBottom: 10,
             }}
           >
             <Text style={{ color: 'white', fontSize: 16 }}>{card.definition}</Text>
@@ -118,7 +121,6 @@ const FavoriteCardsScreen = ({ favoriteCards, flipCard, toggleFavorite }) => (
             </TouchableOpacity>
           </View>
         </FlipCard>
-        <br />
       </TouchableOpacity>
     ))}
   </ScrollView>
