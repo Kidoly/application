@@ -11,12 +11,11 @@ const STORAGE_KEY = 'favoriteCards';
 
 const Card = React.memo(({ card, flipCard, toggleFavorite }) => (
   <FlipCard
-    style={{ width: 300, height: 400, marginTop: 20}}
+    style={{ width: 300, height: 400, marginTop: 20 }}
     friction={6}
     perspective={1000}
     flipHorizontal={true}
-    flipVertical={false}
-  >
+    flipVertical={false}>
     {/* Card Front */}
     <View
       style={{
@@ -28,9 +27,7 @@ const Card = React.memo(({ card, flipCard, toggleFavorite }) => (
         borderRadius: 10,
         flexDirection: 'column', // Changed from 'row' to 'column'
         paddingHorizontal: 10,
-
-      }}
-    >
+      }}>
       <Text style={{ color: 'white', fontSize: 20 }}>{card.word}</Text>
       <Text style={{ color: 'white', fontSize: 12 }}>ID: {card.id}</Text>
     </View>
@@ -45,16 +42,15 @@ const Card = React.memo(({ card, flipCard, toggleFavorite }) => (
         borderRadius: 10,
         flexDirection: 'column', // Changed from 'row' to 'column'
         paddingHorizontal: 10,
-      }}
-    >
+      }}>
       <Text style={{ color: 'white', fontSize: 16 }}>{card.definition}</Text>
       {/* Favorite icon */}
       <TouchableOpacity onPress={() => toggleFavorite(card.id)}>
         <FontAwesome
           name={card.favorite ? 'star' : 'star-o'}
-          size={20}
+          size={30}
           color={card.favorite ? 'yellow' : 'white'}
-          style={{ marginTop: 10 }} // Added marginTop
+          style={{ marginTop: 100 }} // Added marginTop
         />
       </TouchableOpacity>
     </View>
@@ -62,17 +58,37 @@ const Card = React.memo(({ card, flipCard, toggleFavorite }) => (
 ));
 
 const AllCardsScreen = ({ cards, flipCard, toggleFavorite }) => (
-  <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+  <ScrollView
+    contentContainerStyle={{
+      flexGrow: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
     {cards.map((card) => (
-      <Card key={card.id} card={card} flipCard={flipCard} toggleFavorite={toggleFavorite} />
+      <Card
+        key={card.id}
+        card={card}
+        flipCard={flipCard}
+        toggleFavorite={toggleFavorite}
+      />
     ))}
   </ScrollView>
 );
 
 const FavoriteCardsScreen = ({ favoriteCards, flipCard, toggleFavorite }) => (
-  <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+  <ScrollView
+    contentContainerStyle={{
+      flexGrow: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
     {favoriteCards.map((card) => (
-      <Card key={card.id} card={card} flipCard={flipCard} toggleFavorite={toggleFavorite} />
+      <Card
+        key={card.id}
+        card={card}
+        flipCard={flipCard}
+        toggleFavorite={toggleFavorite}
+      />
     ))}
   </ScrollView>
 );
@@ -130,7 +146,12 @@ const App = () => {
       });
 
       // Save favorite cards to AsyncStorage
-      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newCards.filter((card) => card.favorite).map((card) => card.id)));
+      AsyncStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(
+          newCards.filter((card) => card.favorite).map((card) => card.id)
+        )
+      );
 
       return newCards;
     });
@@ -142,12 +163,36 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="All Cards">
-          {() => <AllCardsScreen cards={allCards} flipCard={flipCard} toggleFavorite={toggleFavorite} />}
-        </Tab.Screen>
-        <Tab.Screen name="Favorite Cards">
-          {() => <FavoriteCardsScreen favoriteCards={favoriteCards} flipCard={flipCard} toggleFavorite={toggleFavorite} />}
-        </Tab.Screen>
+        <Tab.Screen
+          name="All Cards"
+          component={() => (
+            <AllCardsScreen
+              cards={allCards}
+              flipCard={flipCard}
+              toggleFavorite={toggleFavorite}
+            />
+          )}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome name="list" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Favorite Cards"
+          component={() => (
+            <FavoriteCardsScreen
+              favoriteCards={favoriteCards}
+              flipCard={flipCard}
+              toggleFavorite={toggleFavorite}
+            />
+          )}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome name="star" size={size} color={color} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
