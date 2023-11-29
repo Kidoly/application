@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, AsyncStorage } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
 import FlipCard from 'react-native-flip-card';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { initialCards } from './cardsData';
+
 
 const STORAGE_KEY = 'favoriteCards';
 
@@ -13,7 +15,7 @@ const AllCardsScreen = ({ cards, flipCard, toggleFavorite }) => (
     {cards.map((card) => (
       <TouchableOpacity key={card.id} onPress={() => flipCard(card.id)}>
         <FlipCard
-          style={{ width: 200, height: 300 }}
+          style={{ width: 300, height: 400 }}
           friction={6}
           perspective={1000}
           flipHorizontal={true}
@@ -22,15 +24,15 @@ const AllCardsScreen = ({ cards, flipCard, toggleFavorite }) => (
           {/* Card Front */}
           <View
             style={{
-              width: 200,
-              height: 300,
+              width: 300,
+              height: 400,
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: 'blue',
               borderRadius: 10,
               flexDirection: 'row',
               paddingHorizontal: 10,
-              marginBottom: 10,
+              marginTop: 20,
             }}
           >
             <Text style={{ color: 'white', fontSize: 20 }}>{card.word}</Text>
@@ -39,15 +41,15 @@ const AllCardsScreen = ({ cards, flipCard, toggleFavorite }) => (
           {/* Card Back */}
           <View
             style={{
-              width: 200,
-              height: 300,
+              width: 300,
+              height: 400,
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: 'green',
               borderRadius: 10,
               flexDirection: 'row',
               paddingHorizontal: 10,
-              marginBottom: 10,
+              marginTop: 20,
             }}
           >
             <Text style={{ color: 'white', fontSize: 16 }}>{card.definition}</Text>
@@ -72,7 +74,7 @@ const FavoriteCardsScreen = ({ favoriteCards, flipCard, toggleFavorite }) => (
     {favoriteCards.map((card) => (
       <TouchableOpacity key={card.id} onPress={() => flipCard(card.id)}>
         <FlipCard
-          style={{ width: 200, height: 300 }}
+          style={{ width: 300, height: 400 }}
           friction={6}
           perspective={1000}
           flipHorizontal={true}
@@ -81,15 +83,15 @@ const FavoriteCardsScreen = ({ favoriteCards, flipCard, toggleFavorite }) => (
           {/* Card Front */}
           <View
             style={{
-              width: 200,
-              height: 300,
+              width: 300,
+              height: 400,
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: 'blue',
               borderRadius: 10,
               flexDirection: 'row',
               paddingHorizontal: 10,
-              marginBottom: 10,
+              marginTop: 20,
             }}
           >
             <Text style={{ color: 'white', fontSize: 20 }}>{card.word}</Text>
@@ -98,15 +100,15 @@ const FavoriteCardsScreen = ({ favoriteCards, flipCard, toggleFavorite }) => (
           {/* Card Back */}
           <View
             style={{
-              width: 200,
-              height: 300,
+              width: 300,
+              height: 400,
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: 'green',
               borderRadius: 10,
               flexDirection: 'row',
               paddingHorizontal: 10,
-              marginBottom: 10,
+              marginTop: 20,
             }}
           >
             <Text style={{ color: 'white', fontSize: 16 }}>{card.definition}</Text>
