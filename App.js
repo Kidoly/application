@@ -7,64 +7,64 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { initialCards } from './cardsData';
 
-
 const STORAGE_KEY = 'favoriteCards';
+
+const Card = React.memo(({ card, flipCard, toggleFavorite }) => (
+  <FlipCard
+    style={{ width: 300, height: 400, marginTop: 20}}
+    friction={6}
+    perspective={1000}
+    flipHorizontal={true}
+    flipVertical={false}
+  >
+    {/* Card Front */}
+    <View
+      style={{
+        width: 300,
+        height: 400,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'blue',
+        borderRadius: 10,
+        flexDirection: 'column', // Changed from 'row' to 'column'
+        paddingHorizontal: 10,
+
+      }}
+    >
+      <Text style={{ color: 'white', fontSize: 20 }}>{card.word}</Text>
+      <Text style={{ color: 'white', fontSize: 12 }}>ID: {card.id}</Text>
+    </View>
+    {/* Card Back */}
+    <View
+      style={{
+        width: 300,
+        height: 400,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'green',
+        borderRadius: 10,
+        flexDirection: 'column', // Changed from 'row' to 'column'
+        paddingHorizontal: 10,
+      }}
+    >
+      <Text style={{ color: 'white', fontSize: 16 }}>{card.definition}</Text>
+      {/* Favorite icon */}
+      <TouchableOpacity onPress={() => toggleFavorite(card.id)}>
+        <FontAwesome
+          name={card.favorite ? 'star' : 'star-o'}
+          size={20}
+          color={card.favorite ? 'yellow' : 'white'}
+          style={{ marginTop: 10 }} // Added marginTop
+        />
+      </TouchableOpacity>
+    </View>
+  </FlipCard>
+));
 
 const AllCardsScreen = ({ cards, flipCard, toggleFavorite }) => (
   <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
     {cards.map((card) => (
-      <TouchableOpacity key={card.id} onPress={() => flipCard(card.id)}>
-        <FlipCard
-          style={{ width: 300, height: 400 }}
-          friction={6}
-          perspective={1000}
-          flipHorizontal={true}
-          flipVertical={false}
-        >
-          {/* Card Front */}
-          <View
-            style={{
-              width: 300,
-              height: 400,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'blue',
-              borderRadius: 10,
-              flexDirection: 'row',
-              paddingHorizontal: 10,
-              marginTop: 20,
-            }}
-          >
-            <Text style={{ color: 'white', fontSize: 20 }}>{card.word}</Text>
-            <Text style={{ position: 'absolute', top: 10, right: 10, color: 'white', fontSize: 12 }}>ID: {card.id}</Text>
-          </View>
-          {/* Card Back */}
-          <View
-            style={{
-              width: 300,
-              height: 400,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'green',
-              borderRadius: 10,
-              flexDirection: 'row',
-              paddingHorizontal: 10,
-              marginTop: 20,
-            }}
-          >
-            <Text style={{ color: 'white', fontSize: 16 }}>{card.definition}</Text>
-            {/* Favorite icon */}
-            <TouchableOpacity onPress={() => toggleFavorite(card.id)}>
-              <FontAwesome
-                name={card.favorite ? 'star' : 'star-o'}
-                size={20}
-                color={card.favorite ? 'yellow' : 'white'}
-                style={{ marginLeft: 10 }}
-              />
-            </TouchableOpacity>
-          </View>
-        </FlipCard>
-      </TouchableOpacity>
+      <Card key={card.id} card={card} flipCard={flipCard} toggleFavorite={toggleFavorite} />
     ))}
   </ScrollView>
 );
@@ -72,58 +72,7 @@ const AllCardsScreen = ({ cards, flipCard, toggleFavorite }) => (
 const FavoriteCardsScreen = ({ favoriteCards, flipCard, toggleFavorite }) => (
   <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
     {favoriteCards.map((card) => (
-      <TouchableOpacity key={card.id} onPress={() => flipCard(card.id)}>
-        <FlipCard
-          style={{ width: 300, height: 400 }}
-          friction={6}
-          perspective={1000}
-          flipHorizontal={true}
-          flipVertical={false}
-        >
-          {/* Card Front */}
-          <View
-            style={{
-              width: 300,
-              height: 400,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'blue',
-              borderRadius: 10,
-              flexDirection: 'row',
-              paddingHorizontal: 10,
-              marginTop: 20,
-            }}
-          >
-            <Text style={{ color: 'white', fontSize: 20 }}>{card.word}</Text>
-            <Text style={{ position: 'absolute', top: 10, right: 10, color: 'white', fontSize: 12 }}>ID: {card.id}</Text>
-          </View>
-          {/* Card Back */}
-          <View
-            style={{
-              width: 300,
-              height: 400,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'green',
-              borderRadius: 10,
-              flexDirection: 'row',
-              paddingHorizontal: 10,
-              marginTop: 20,
-            }}
-          >
-            <Text style={{ color: 'white', fontSize: 16 }}>{card.definition}</Text>
-            {/* Favorite icon */}
-            <TouchableOpacity onPress={() => toggleFavorite(card.id)}>
-              <FontAwesome
-                name={card.favorite ? 'star' : 'star-o'}
-                size={20}
-                color={card.favorite ? 'yellow' : 'white'}
-                style={{ marginLeft: 10 }}
-              />
-            </TouchableOpacity>
-          </View>
-        </FlipCard>
-      </TouchableOpacity>
+      <Card key={card.id} card={card} flipCard={flipCard} toggleFavorite={toggleFavorite} />
     ))}
   </ScrollView>
 );
@@ -133,7 +82,7 @@ const Tab = createBottomTabNavigator();
 const App = () => {
   const [cards, setCards] = useState(initialCards);
   const [flipped, setFlipped] = useState([]);
-  
+
   useEffect(() => {
     // Load favorite cards from AsyncStorage
     const loadFavoriteCards = async () => {
